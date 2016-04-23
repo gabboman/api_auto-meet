@@ -4,11 +4,11 @@ var app = express();
 
 var mysql      = require('mysql');
 
-var connection = mysql.createConnection({
+var connection = mysql.createConnection({//debo externalizar esto a un archivo, capischi?
   host     : 'localhost',
-  user     : 'user',
-  password : 'password',
-  database : 'database'
+  user     : 'cm',
+  password : 'cm',
+  database : 'cm'
 });
 
 connection.connect();
