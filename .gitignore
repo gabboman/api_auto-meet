@@ -4,7 +4,11 @@ logs
 npm-debug.log*
 
 #private data
-conection.js
+conexion.py
+
+#cache_python
+
+__pycache__*
 
 # Runtime data
 pids

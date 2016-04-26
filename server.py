@@ -1,11 +1,10 @@
 import mysql.connector
 from flask.ext.api import FlaskAPI
-
+import conexion
 app = FlaskAPI('automeet')
 
-cnx = mysql.connector.connect(user='cm', password='cm',
-                              host='127.0.0.1',
-                              database='cm')
+cnx = conexion.conectar()
+
 cursor = cnx.cursor()
 
 
@@ -32,7 +31,7 @@ for (id_destino,nombre_universidad,provincia) in cursor:
 cursor.close()
 cnx.close()
 @app.route("/<int:key1>/<int:key2>/", methods=['GET'])
-def getPueblo(key1,key2):
+def getViajes(key1,key2):
     if key1 not in pueblos or key2 not in destinos:
         return ["NOT FOUND"]
     (a,b)=pueblos[key1]
