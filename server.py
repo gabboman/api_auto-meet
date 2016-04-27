@@ -35,15 +35,18 @@ cursor.close()
 cnx.close()
 #Fin de la inicializacion
 
+#Funciones de utilidad
+def checkToken(token):
+    consultaToken='SELECT token FROM `usuarios` WHERE `token` LIKE \''+token+'\''
+    conexionToken=conexion.conectar()
+    cursorToken=conexionToken.cursor()
+    cursorToken.execute(consultaToken)
+    for tok in cursorToken:
+        return True
+    return False
 
-@app.route("/<int:key1>/<int:key2>/", methods=['GET'])
-def getViajes(key1,key2):
-    if key1 not in pueblos or key2 not in destinos:
-        return ["NOT FOUND"]
-    (a,b)=pueblos[key1]
-    return {a:destinos[key2]}
 
-
+#Creacion de rutas
 @app.route('/pueblos/')
 def example():
     return pueblos
@@ -108,7 +111,6 @@ def login():
     correo=datos["correo"]
     passwd=datos["password"]
     consultaLogin='SELECT token,pass FROM `usuarios` WHERE `correo` LIKE \''+correo+'\''
-    print(consultaLogin)
     conexionLogin=conexion.conectar()
     cursorLogin=conexionLogin.cursor()
     cursorLogin.execute(consultaLogin)
@@ -118,6 +120,22 @@ def login():
             return {"token":token}
     conexionLogin.close()
     return{"Error":"Usuario o contraseña inválido"}
+
+
+#Importante: El sistema de fechas será de días del 1 al 5, refiriendose de lunes a viernes.
+#Teniendo en cuenta que a la larga interesaría poder crear viajes de forma dinámica y no cambiar mucho la base de datos
+#puede ser rentable usar los dias del 1 al 5 de enero, e insertar ahí los datos.
+#Insultos aqui
+@app.route("/creaviaje/",methods=['POST'])
+def creaviaje():
+    datos=request.form
+    token=datos["token"]
+    if checkToken(token):
+
+
+
+        return {"exito":True}
+    return{"Error":"Token inválido"}
 
 
 
