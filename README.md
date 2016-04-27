@@ -16,8 +16,16 @@ password
 La api devolverá un exito:true, y token: el token. Las cosas ue requieran el usuario serán autorizadas con el token.
 
 
+
+
+
+
+
+
 Para el login bastará con:
 correo y password. Igualmente, devolverá el mismo token que con el registro
+
+
 
 
 
