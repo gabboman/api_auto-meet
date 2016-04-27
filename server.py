@@ -50,55 +50,72 @@ def example():
 
 @app.route("/registro/",methods=['POST'])
 def registro():
-    if request.method == 'POST':
-        datos=request.form
-        nombre=datos["nombre"]
-        apellidos=datos["apellidos"]
-        telefono=datos["telefono"]
-        pueblo=datos["pueblo"]
-        correo=datos["correo"]
-        passwd= generate_password_hash(datos["password"])# check_password_hash(pw_hash, password)
-        #verificar datos aqui:
-        #el pueblo existe
-        errores=list()
-        if(not int(pueblo) in pueblos):
-            errores.append("error: pueblo no existente: "+pueblo)
-        #el correo es valido
-        if not validate_email(correo):#paranoya: verify=True revisar que el correo existe
-            errores.append("error: correo no valido: "+correo)
-        #el telefono es valido
-        regexpTelefono = re.compile("^[9|6|7][0-9]{8}$")
-        if not regexpTelefono.match(telefono):
-            errores.append("error: telefono no valido: "+telefono)
-        #verificar que el usuario no está registrado:
-        consultaCorreoUnico='SELECT correo FROM `usuarios` WHERE `correo` LIKE \''+correo+'\''
-        conexionRegistro=conexion.conectar()
-        cursorRegistro=conexionRegistro.cursor()
-        cursorRegistro.execute(consultaCorreoUnico)
-        for mail in cursorRegistro:
-             errores.append("Ya existe un usuario con este correo")
+
+    datos=request.form
+    nombre=datos["nombre"]
+    apellidos=datos["apellidos"]
+    telefono=datos["telefono"]
+    pueblo=datos["pueblo"]
+    correo=datos["correo"]
+    passwd= generate_password_hash(datos["password"])# check_password_hash(pw_hash, password)
+    #verificar datos aqui:
+    #el pueblo existe
+    errores=list()
+    if(not int(pueblo) in pueblos):
+        errores.append("error: pueblo no existente: "+pueblo)
+    #el correo es valido
+    if not validate_email(correo):#paranoya: verify=True revisar que el correo existe
+        errores.append("error: correo no valido: "+correo)
+    #el telefono es valido
+    regexpTelefono = re.compile("^[9|6|7][0-9]{8}$")
+    if not regexpTelefono.match(telefono):
+        errores.append("error: telefono no valido: "+telefono)
+    #verificar que el usuario no está registrado:
+    consultaCorreoUnico='SELECT correo FROM `usuarios` WHERE `correo` LIKE \''+correo+'\''
+    conexionRegistro=conexion.conectar()
+    cursorRegistro=conexionRegistro.cursor()
+    cursorRegistro.execute(consultaCorreoUnico)
+    for mail in cursorRegistro:
+         errores.append("Ya existe un usuario con este correo")
 
 
-        #En caso de error devolver una lista con los errores
-        if(len(errores)>0):
-            return errores
+    #En caso de error devolver una lista con los errores
+    if(len(errores)>0):
+        return errores
 
-        #No hace falta else: hacemos un return
+    #No hace falta else: hacemos un return
 
-        #Generar token para el usuario en caso de exito
+    #Generar token para el usuario en caso de exito
 
-        token=generate_password_hash("TOKEN++"+passwd+datos["password"])
+    token=generate_password_hash("TOKEN++"+passwd+datos["password"])
 
-        #insertar datos en la base de datos
-        insertarUsuario="INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `pueblo_origen`, `pass`, `correo`, `token`) VALUES (NULL, \'" +\
-        nombre+"\',\'"+apellidos+"\',\'"+telefono+"\',"+pueblo+",\'"+passwd+"\',\'"+correo+"\',\'"+token+"\');"
-        #print(insertarUsuario)
-        cursorRegistro.execute(insertarUsuario)
-        conexionRegistro.commit()
-        conexionRegistro.close()
+    #insertar datos en la base de datos
+    insertarUsuario="INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `pueblo_origen`, `pass`, `correo`, `token`) VALUES (NULL, \'" +\
+    nombre+"\',\'"+apellidos+"\',\'"+telefono+"\',"+pueblo+",\'"+passwd+"\',\'"+correo+"\',\'"+token+"\');"
+    #print(insertarUsuario)
+    cursorRegistro.execute(insertarUsuario)
+    conexionRegistro.commit()
+    conexionRegistro.close()
 
-        #devolver {"token":token}
-        return {"exito":True,"token":token}
+    #devolver {"token":token}
+    return {"exito":True,"token":token}
+
+
+
+@app.route("/login/",methods=['POST'])
+def login():
+    datos=request.form
+    correo=datos["correo"]
+    passwd=datos["password"]
+    consultaLogin='SELECT token,pass FROM `usuarios` WHERE `correo` LIKE \''+correo+'\''
+    print(consultaLogin)
+    conexionLogin=conexion.conectar()
+    cursorLogin=conexionLogin.cursor()
+    cursorLogin.execute(consultaLogin)
+    for token,password in cursorLogin:
+        if check_password_hash(password, passwd):
+            return {"token":token}
+    return{"Error":"Usuario o contraseña inválido"}
 
 
 
