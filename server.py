@@ -70,17 +70,35 @@ def registro():
         regexpTelefono = re.compile("^[9|6|7][0-9]{8}$")
         if not regexpTelefono.match(telefono):
             errores.append("error: telefono no valido: "+telefono)
+        #verificar que el usuario no está registrado:
+        consultaCorreoUnico='SELECT correo FROM `usuarios` WHERE `correo` LIKE \''+correo+'\''
+        conexionRegistro=conexion.conectar()
+        cursorRegistro=conexionRegistro.cursor()
+        cursorRegistro.execute(consultaCorreoUnico)
+        for mail in cursorRegistro:
+             errores.append("Ya existe un usuario con este correo")
+
+
         #En caso de error devolver una lista con los errores
         if(len(errores)>0):
             return errores
 
+        #No hace falta else: hacemos un return
+
         #Generar token para el usuario en caso de exito
 
+        token=generate_password_hash("TOKEN++"+passwd+datos["password"])
+
         #insertar datos en la base de datos
+        insertarUsuario="INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `pueblo_origen`, `pass`, `correo`, `token`) VALUES (NULL, \'" +\
+        nombre+"\',\'"+apellidos+"\',\'"+telefono+"\',"+pueblo+",\'"+passwd+"\',\'"+correo+"\',\'"+token+"\');"
+        #print(insertarUsuario)
+        cursorRegistro.execute(insertarUsuario)
+        conexionRegistro.commit()
+        conexionRegistro.close()
 
         #devolver {"token":token}
-        print(errores)
-        return {"hash":passwd}
+        return {"exito":True,"token":token}
 
 
 
