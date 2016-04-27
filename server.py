@@ -53,7 +53,22 @@ def registro():
         apellidos=datos["apellidos"]
         telefono=datos["apellidos"]
         pueblo=datos["pueblo"]
+        correo=datos["correo"]
         passwd= generate_password_hash(datos["password"])# check_password_hash(pw_hash, password)
+        #verificar datos aqui:
+        #el pueblo existe
+
+        #el correo es valido
+
+        #el telefono es valido
+
+        #En caso de error devolver una lista con los errores
+
+        #Generar token para el usuario en caso de exito
+
+        #insertar datos en la base de datos
+
+        #devolver {"token":token}
         return {"hash":passwd}
 
 
