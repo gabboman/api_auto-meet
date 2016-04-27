@@ -113,8 +113,10 @@ def login():
     cursorLogin=conexionLogin.cursor()
     cursorLogin.execute(consultaLogin)
     for token,password in cursorLogin:
+        conexionLogin.close()
         if check_password_hash(password, passwd):
             return {"token":token}
+    conexionLogin.close()
     return{"Error":"Usuario o contraseña inválido"}
 
 
