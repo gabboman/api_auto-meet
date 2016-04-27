@@ -1,6 +1,8 @@
 from flask import request, url_for
 from flask.ext.api import FlaskAPI, status, exceptions
 from werkzeug.security import generate_password_hash, check_password_hash
+from validate_email import validate_email
+import re
 import conexion
 app = FlaskAPI(__name__)
 
@@ -41,6 +43,7 @@ def getViajes(key1,key2):
     (a,b)=pueblos[key1]
     return {a:destinos[key2]}
 
+
 @app.route('/pueblos/')
 def example():
     return pueblos
@@ -51,24 +54,32 @@ def registro():
         datos=request.form
         nombre=datos["nombre"]
         apellidos=datos["apellidos"]
-        telefono=datos["apellidos"]
+        telefono=datos["telefono"]
         pueblo=datos["pueblo"]
         correo=datos["correo"]
         passwd= generate_password_hash(datos["password"])# check_password_hash(pw_hash, password)
         #verificar datos aqui:
         #el pueblo existe
-
+        errores=list()
+        if(not int(pueblo) in pueblos):
+            errores.append("error: pueblo no existente: "+pueblo)
         #el correo es valido
-
+        if not validate_email(correo):#paranoya: verify=True revisar que el correo existe
+            errores.append("error: correo no valido: "+correo)
         #el telefono es valido
-
+        regexpTelefono = re.compile("^[9|6|7][0-9]{8}$")
+        if not regexpTelefono.match(telefono):
+            errores.append("error: telefono no valido: "+telefono)
         #En caso de error devolver una lista con los errores
+        if(len(errores)>0):
+            return errores
 
         #Generar token para el usuario en caso de exito
 
         #insertar datos en la base de datos
 
         #devolver {"token":token}
+        print(errores)
         return {"hash":passwd}
 
 
