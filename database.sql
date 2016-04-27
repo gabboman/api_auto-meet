@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-04-2016 a las 11:23:55
+-- Tiempo de generación: 27-04-2016 a las 15:56:40
 -- Versión del servidor: 10.0.22-MariaDB
 -- Versión de PHP: 5.6.20
 
@@ -266,15 +266,15 @@ CREATE TABLE `usuarios` (
   `apellidos` varchar(50) NOT NULL,
   `telefono` int(16) NOT NULL,
   `pueblo_origen` int(16) NOT NULL,
-  `pass` varchar(512) NOT NULL
+  `pass` varchar(512) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `token` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `pueblo_origen`, `pass`) VALUES
-(2, 'Usuario', 'Pruebas', 623456789, 12, '');
 
 -- --------------------------------------------------------
 
@@ -292,13 +292,6 @@ CREATE TABLE `viajes` (
   `precio` decimal(10,0) NOT NULL,
   `destino` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `viajes`
---
-
-INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`) VALUES
-(1, '2016-04-27', '2016-04-27', 'Me gusta fumar mientras conduzco', 2, 3, '3', 1);
 
 --
 -- Índices para tablas volcadas
@@ -332,8 +325,10 @@ ALTER TABLE `pueblos`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `correo` (`correo`),
   ADD KEY `pueblo_origen` (`pueblo_origen`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `correo_2` (`correo`);
 
 --
 -- Indices de la tabla `viajes`
@@ -357,7 +352,7 @@ ALTER TABLE `destinos`
 -- AUTO_INCREMENT de la tabla `provincias`
 --
 ALTER TABLE `provincias`
-  MODIFY `id_provincia` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_provincia` int(16) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `pueblos`
 --
@@ -367,12 +362,12 @@ ALTER TABLE `pueblos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT de la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT;
 --
 -- Restricciones para tablas volcadas
 --
