@@ -2,11 +2,17 @@
 
 Para el registro de usuarios hay que hacer un post a /registro/ con los siguientes datos:
 nombre
+
 apellidos
+
 telefono
+
 pueblo: Numero indicando la id del pueblo del usuario a registrar
+
 correo
+
 password
+
 La api devolverá un exito:true, y token: el token. Las cosas ue requieran el usuario serán autorizadas con el token.
 
 
