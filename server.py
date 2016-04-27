@@ -1,5 +1,6 @@
 from flask import request, url_for
 from flask.ext.api import FlaskAPI, status, exceptions
+from werkzeug.security import generate_password_hash, check_password_hash
 import conexion
 app = FlaskAPI(__name__)
 
@@ -47,9 +48,13 @@ def example():
 @app.route("/registro/",methods=['POST'])
 def registro():
     if request.method == 'POST':
-        note = str(request.data.get('patatas'))
-        return request.args
-        #return {"dank":"maymays"}
+        datos=request.form
+        nombre=datos["nombre"]
+        apellidos=datos["apellidos"]
+        telefono=datos["apellidos"]
+        pueblo=datos["pueblo"]
+        passwd= generate_password_hash(datos["password"])# check_password_hash(pw_hash, password)
+        return {"hash":passwd}
 
 
 
