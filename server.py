@@ -22,7 +22,8 @@ cursor.execute(query)
 #cursor.execute(query, (hire_start, hire_end))
 
 for (id_pueblo, nombre_pueblo, id_provincia) in cursor:
-  pueblos[id_pueblo]=(nombre_pueblo,id_provincia)
+    pueblos[id_pueblo]=nombre_pueblo
+    #pueblos[id_pueblo]=(nombre_pueblo,id_provincia)
 
 query = ("SELECT * FROM destinos"
          #"WHERE hire_date BETWEEN %s AND %s"
@@ -131,6 +132,11 @@ def creaviaje():
     datos=request.form
     token=datos["token"]
     if checkToken(token):
+        dia=datos["dia"]
+        hora=datos["hora"]
+        minutos=datos["minutos"]
+        plazas=datos["plazas"]
+
 
 
 
