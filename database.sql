@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.0
+-- version 4.6.1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 27-04-2016 a las 15:56:40
--- Versión del servidor: 10.0.22-MariaDB
--- Versión de PHP: 5.6.20
+-- Tiempo de generación: 15-05-2016 a las 14:57:06
+-- Versión del servidor: 10.0.23-MariaDB
+-- Versión de PHP: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `cm`
+-- Base de datos: `automeet`
 --
 
 -- --------------------------------------------------------
@@ -271,11 +271,6 @@ CREATE TABLE `usuarios` (
   `token` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `usuarios`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -284,8 +279,8 @@ CREATE TABLE `usuarios` (
 
 CREATE TABLE `viajes` (
   `id_viaje` int(16) NOT NULL,
-  `salida` date NOT NULL,
-  `llegada` date NOT NULL,
+  `salida` datetime NOT NULL,
+  `llegada` datetime NOT NULL,
   `detalles` varchar(250) NOT NULL,
   `id_usuario` int(16) NOT NULL,
   `plazas` int(16) NOT NULL,
@@ -362,7 +357,7 @@ ALTER TABLE `pueblos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `viajes`
 --
