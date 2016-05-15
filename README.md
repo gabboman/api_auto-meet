@@ -28,5 +28,5 @@ correo y password. Igualmente, devolverá el mismo token que con el registro
 
 
 
-
-Es un sistema mejorable, podríamos poner tokens por app. Esto se hará en el futuro
+#SIN TESTEAR:
+*crear viajes

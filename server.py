@@ -47,6 +47,17 @@ def checkToken(token):
     return False
 
 
+def getIdFromToken(token):
+    consultaToken='SELECT id FROM `usuarios` WHERE `token` LIKE \''+token+'\''
+    conexionToken=conexion.conectar()
+    cursorToken=conexionToken.cursor()
+    cursorToken.execute(consultaToken)
+    for tok in cursorToken:
+        return tok
+    print("TOKEN INVALIDO")
+    return "ERROR"
+
+
 #Creacion de rutas
 @app.route('/pueblos/')
 def example():
@@ -132,12 +143,18 @@ def creaviaje():
     datos=request.form
     token=datos["token"]
     if checkToken(token):
+        id_usuario=getIdFromToken(token)
         dia=datos["dia"]
         hora=datos["hora"]
         minutos=datos["minutos"]
+        horaLlegada=datos["horaLlegada"]
+        minutosLlegada=datos["minutosLlegada"]
         plazas=datos["plazas"]
-
-
+        precio=datos["precio"]
+        detalles=datos["detalles"]
+        consultaInsertarViaje="INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`) \
+        VALUES (NULL, '2016-01-"+dia+" "+hora+":"+minutos+":00', '2016-01-"+dia+" "+horaLlegada+":"+minutosLlegada+":00',\
+         '"+detalles+"', '"+id_usuario+"', '"+plazas+"', '"+precio+"', '"+destino+"')"
 
 
         return {"exito":True}
