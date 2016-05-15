@@ -28,5 +28,7 @@ correo y password. Igualmente, devolverá el mismo token que con el registro
 
 
 
-#SIN TESTEAR:
+#SIN TESTEAR
+
+#SIN VERIFICAR DATOS:
 *crear viajes

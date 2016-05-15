@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 15-05-2016 a las 14:57:06
+-- Tiempo de generación: 15-05-2016 a las 16:01:14
 -- Versión del servidor: 10.0.23-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -271,6 +271,13 @@ CREATE TABLE `usuarios` (
   `token` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `pueblo_origen`, `pass`, `correo`, `token`) VALUES
+(1, 'pepe', 'polla', 666555444, 5, 'INACCESIBLE', 'pepepolla@correo.com', 'tokendepepepolla');
+
 -- --------------------------------------------------------
 
 --
@@ -287,6 +294,13 @@ CREATE TABLE `viajes` (
   `precio` decimal(10,0) NOT NULL,
   `destino` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `viajes`
+--
+
+INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`) VALUES
+(1, '2016-01-01 08:30:00', '2016-01-01 09:00:00', 'Escucho radiohead y fumo marijuana', 1, 4, '3', 1);
 
 --
 -- Índices para tablas volcadas
@@ -357,12 +371,12 @@ ALTER TABLE `pueblos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- Restricciones para tablas volcadas
 --

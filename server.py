@@ -48,12 +48,12 @@ def checkToken(token):
 
 
 def getIdFromToken(token):
-    consultaToken='SELECT id FROM `usuarios` WHERE `token` LIKE \''+token+'\''
+    consultaToken='SELECT id_usuario FROM `usuarios` WHERE `token` LIKE \''+token+'\''
     conexionToken=conexion.conectar()
     cursorToken=conexionToken.cursor()
     cursorToken.execute(consultaToken)
     for tok in cursorToken:
-        return tok
+        return tok[0]
     print("TOKEN INVALIDO")
     return "ERROR"
 
@@ -152,9 +152,15 @@ def creaviaje():
         plazas=datos["plazas"]
         precio=datos["precio"]
         detalles=datos["detalles"]
+        destino=datos["destino"]
         consultaInsertarViaje="INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`) \
-        VALUES (NULL, '2016-01-"+dia+" "+hora+":"+minutos+":00', '2016-01-"+dia+" "+horaLlegada+":"+minutosLlegada+":00',\
-         '"+detalles+"', '"+id_usuario+"', '"+plazas+"', '"+precio+"', '"+destino+"')"
+        VALUES (NULL, '2016-01-"+str(dia)+" "+str(hora)+":"+str(minutos)+":00', '2016-01-"+str(dia)+" "+str(horaLlegada)+":"+str(minutosLlegada)+":00',\
+         '"+str(detalles)+"', '"+str(id_usuario)+"', '"+str(plazas)+"', '"+str(precio)+"', '"+str(destino)+"')"
+        conexionCreaViaje=conexion.conectar()
+        cursorCreaViaje=conexionCreaViaje.cursor()
+        cursorCreaViaje.execute(consultaInsertarViaje)
+        conexionCreaViaje.commit()
+        conexionCreaViaje.close()
 
 
         return {"exito":True}
