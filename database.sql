@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 15-05-2016 a las 16:01:14
+-- Tiempo de generación: 18-05-2016 a las 16:17:55
 -- Versión del servidor: 10.0.23-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -291,7 +291,7 @@ CREATE TABLE `viajes` (
   `detalles` varchar(250) NOT NULL,
   `id_usuario` int(16) NOT NULL,
   `plazas` int(16) NOT NULL,
-  `precio` decimal(10,0) NOT NULL,
+  `precio` decimal(10,5) NOT NULL,
   `destino` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -300,7 +300,10 @@ CREATE TABLE `viajes` (
 --
 
 INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`) VALUES
-(1, '2016-01-01 08:30:00', '2016-01-01 09:00:00', 'Escucho radiohead y fumo marijuana', 1, 4, '3', 1);
+(1, '2016-01-01 08:30:00', '2016-01-01 09:00:00', 'Escucho radiohead y fumo marijuana', 1, 4, '3.00000', 1),
+(2, '2016-01-03 09:30:00', '2016-01-03 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, '5.00000', 2),
+(3, '2016-01-02 09:30:00', '2016-01-02 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, '5.00000', 2),
+(4, '2016-01-01 09:30:00', '2016-01-01 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, '5.00000', 2);
 
 --
 -- Índices para tablas volcadas
@@ -376,7 +379,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --

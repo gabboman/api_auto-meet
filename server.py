@@ -167,5 +167,30 @@ def creaviaje():
     return{"Error":"Token inválido"}
 
 
+@app.route("/viajesFiltrados/",methods=['POST'])
+def viajesFiltrados():
+    datos=request.form
+    dia=datos["dia"]
+    hora=datos["hora"]
+    minutos=datos["minutos"]
+    destino=datos["destino"]
+    origen=datos["origen"]#Numero indicando el id del pueblo
+    margen=datos["margen"]
+    consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where llegada >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
+     INTERVAL "+margen+" MINUTE) AND llegada <= date_add('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
+      INTERVAL "+margen+" MINUTE) AND pueblo_origen="+origen+" AND destino="+destino
+    print(consultaInsertarViaje)
+    conexionCreaViaje=conexion.conectar()
+    cursorCreaViaje=conexionCreaViaje.cursor()
+    cursorCreaViaje.execute(consultaInsertarViaje)
+    conexionCreaViaje.close()
+    res=dict()
+    for id_viaje,salida,llegada,detalles,id_usuario,plazas,precio,destino,pueblo_origen in cursorCreaViaje:
+         res[id_viaje]={"salida":salida,"llegada":llegada,"detalles":detalles,"id_usuario":id_usuario,"plazas":plazas,"precio":str(precio)}
+
+
+
+    return res
+
 
 app.run(debug=True,host='0.0.0.0')
