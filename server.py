@@ -57,6 +57,16 @@ def getIdFromToken(token):
     print("TOKEN INVALIDO")
     return "ERROR"
 
+def getIdPueblo(pueblo):#Si es un numero verificamos que esta en la lista de pueblos, si no , lo hacemos alrevés y buscamos su id
+    if(pueblo in pueblos):
+        return pueblo
+    else:
+        inv_map = {v: k for k, v in pueblos.items()}
+        if(pueblo in inv_map):
+            return str(inv_map[pueblo])
+        else:
+            return "ERROR"
+
 
 #Creacion de rutas
 @app.route('/pueblos/')
@@ -76,7 +86,7 @@ def registro():
     #verificar datos aqui:
     #el pueblo existe
     errores=list()
-    if(not int(pueblo) in pueblos):
+    if(getIdPueblo(pueblo)=="ERROR"):
         errores.append("error: pueblo no existente: "+pueblo)
     #el correo es valido
     if not validate_email(correo):#paranoya: verify=True revisar que el correo existe
@@ -102,11 +112,11 @@ def registro():
 
     #Generar token para el usuario en caso de exito
 
-    token=generate_password_hash("TOKEN++"+passwd+datos["password"])
+    token=generate_password_hash("TOKEN++"+passwd+datos["password"]+correo)
 
     #insertar datos en la base de datos
     insertarUsuario="INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `pueblo_origen`, `pass`, `correo`, `token`) VALUES (NULL, \'" +\
-    nombre+"\',\'"+apellidos+"\',\'"+telefono+"\',"+pueblo+",\'"+passwd+"\',\'"+correo+"\',\'"+token+"\');"
+    nombre+"\',\'"+apellidos+"\',\'"+telefono+"\',"+getIdPueblo(pueblo)+",\'"+passwd+"\',\'"+correo+"\',\'"+token+"\');"
     #print(insertarUsuario)
     cursorRegistro.execute(insertarUsuario)
     conexionRegistro.commit()
