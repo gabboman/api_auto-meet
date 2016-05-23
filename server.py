@@ -72,6 +72,10 @@ def getIdPueblo(pueblo):#Si es un numero verificamos que esta en la lista de pue
 @app.route('/pueblos/')
 def example():
     return pueblos
+@app.route("/test/",methods=['POST'])
+def test():
+    datos=request.form
+    return {datos["test1"]:datos["test2"]}
 
 @app.route("/registro/",methods=['POST'])
 def registro():
