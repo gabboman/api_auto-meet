@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.1
+-- version 4.2.12deb2+deb8u1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-05-2016 a las 16:17:55
--- Versión del servidor: 10.0.23-MariaDB
--- Versión de PHP: 5.6.21
+-- Tiempo de generación: 26-05-2016 a las 20:00:18
+-- Versión del servidor: 10.0.23-MariaDB-0+deb8u1
+-- Versión de PHP: 5.6.20-0+deb8u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `automeet`
@@ -26,11 +26,11 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `destinos`
 --
 
-CREATE TABLE `destinos` (
-  `id_destino` int(16) NOT NULL,
+CREATE TABLE IF NOT EXISTS `destinos` (
+`id_destino` int(16) NOT NULL,
   `nombre_universidad` varchar(100) NOT NULL,
   `provincia` int(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `destinos`
@@ -47,8 +47,8 @@ INSERT INTO `destinos` (`id_destino`, `nombre_universidad`, `provincia`) VALUES
 -- Estructura de tabla para la tabla `provincias`
 --
 
-CREATE TABLE `provincias` (
-  `id_provincia` int(16) NOT NULL,
+CREATE TABLE IF NOT EXISTS `provincias` (
+`id_provincia` int(16) NOT NULL,
   `provincia` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -65,11 +65,11 @@ INSERT INTO `provincias` (`id_provincia`, `provincia`) VALUES
 -- Estructura de tabla para la tabla `pueblos`
 --
 
-CREATE TABLE `pueblos` (
-  `id_pueblo` int(16) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pueblos` (
+`id_pueblo` int(16) NOT NULL,
   `nombre_pueblo` varchar(80) NOT NULL,
   `id_provincia` int(16) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=180 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `pueblos`
@@ -260,8 +260,8 @@ INSERT INTO `pueblos` (`id_pueblo`, `nombre_pueblo`, `id_provincia`) VALUES
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `usuarios` (
-  `id_usuario` int(16) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuarios` (
+`id_usuario` int(16) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellidos` varchar(50) NOT NULL,
   `telefono` int(16) NOT NULL,
@@ -269,7 +269,7 @@ CREATE TABLE `usuarios` (
   `pass` varchar(512) NOT NULL,
   `correo` varchar(100) NOT NULL,
   `token` varchar(512) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -284,26 +284,27 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `telefono`, `pueblo
 -- Estructura de tabla para la tabla `viajes`
 --
 
-CREATE TABLE `viajes` (
-  `id_viaje` int(16) NOT NULL,
+CREATE TABLE IF NOT EXISTS `viajes` (
+`id_viaje` int(16) NOT NULL,
   `salida` datetime NOT NULL,
   `llegada` datetime NOT NULL,
   `detalles` varchar(250) NOT NULL,
   `id_usuario` int(16) NOT NULL,
   `plazas` int(16) NOT NULL,
   `precio` decimal(10,5) NOT NULL,
-  `destino` int(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `destino` int(16) NOT NULL,
+  `EsDeVuelta` int(1) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `viajes`
 --
 
-INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`) VALUES
-(1, '2016-01-01 08:30:00', '2016-01-01 09:00:00', 'Escucho radiohead y fumo marijuana', 1, 4, '3.00000', 1),
-(2, '2016-01-03 09:30:00', '2016-01-03 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, '5.00000', 2),
-(3, '2016-01-02 09:30:00', '2016-01-02 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, '5.00000', 2),
-(4, '2016-01-01 09:30:00', '2016-01-01 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, '5.00000', 2);
+INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`, `EsDeVuelta`) VALUES
+(1, '2016-01-01 08:30:00', '2016-01-01 09:00:00', 'Escucho radiohead y fumo marijuana', 1, 4, 3.00000, 1, 0),
+(2, '2016-01-03 09:30:00', '2016-01-03 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, 5.00000, 2, 0),
+(3, '2016-01-02 09:30:00', '2016-01-02 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, 5.00000, 2, 0),
+(4, '2016-01-01 09:30:00', '2016-01-01 10:44:00', 'SHRECK YOURSELF BEFORE U SHRECK YOUR WEEDELEGE', 1, 5, 5.00000, 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -313,43 +314,31 @@ INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`,
 -- Indices de la tabla `destinos`
 --
 ALTER TABLE `destinos`
-  ADD PRIMARY KEY (`id_destino`),
-  ADD KEY `id_destino` (`id_destino`),
-  ADD KEY `provincia` (`provincia`);
+ ADD PRIMARY KEY (`id_destino`), ADD KEY `id_destino` (`id_destino`), ADD KEY `provincia` (`provincia`);
 
 --
 -- Indices de la tabla `provincias`
 --
 ALTER TABLE `provincias`
-  ADD PRIMARY KEY (`id_provincia`),
-  ADD KEY `id_provincia` (`id_provincia`);
+ ADD PRIMARY KEY (`id_provincia`), ADD KEY `id_provincia` (`id_provincia`);
 
 --
 -- Indices de la tabla `pueblos`
 --
 ALTER TABLE `pueblos`
-  ADD PRIMARY KEY (`id_pueblo`),
-  ADD KEY `id_pueblo` (`id_pueblo`),
-  ADD KEY `id_provincia` (`id_provincia`);
+ ADD PRIMARY KEY (`id_pueblo`), ADD KEY `id_pueblo` (`id_pueblo`), ADD KEY `id_provincia` (`id_provincia`);
 
 --
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id_usuario`),
-  ADD UNIQUE KEY `correo` (`correo`),
-  ADD KEY `pueblo_origen` (`pueblo_origen`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `correo_2` (`correo`);
+ ADD PRIMARY KEY (`id_usuario`), ADD UNIQUE KEY `correo` (`correo`), ADD KEY `pueblo_origen` (`pueblo_origen`), ADD KEY `id_usuario` (`id_usuario`), ADD KEY `correo_2` (`correo`);
 
 --
 -- Indices de la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  ADD PRIMARY KEY (`id_viaje`),
-  ADD KEY `id_viaje` (`id_viaje`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `destino` (`destino`);
+ ADD PRIMARY KEY (`id_viaje`), ADD KEY `id_viaje` (`id_viaje`), ADD KEY `id_usuario` (`id_usuario`), ADD KEY `destino` (`destino`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -359,27 +348,27 @@ ALTER TABLE `viajes`
 -- AUTO_INCREMENT de la tabla `destinos`
 --
 ALTER TABLE `destinos`
-  MODIFY `id_destino` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+MODIFY `id_destino` int(16) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `provincias`
 --
 ALTER TABLE `provincias`
-  MODIFY `id_provincia` int(16) NOT NULL AUTO_INCREMENT;
+MODIFY `id_provincia` int(16) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `pueblos`
 --
 ALTER TABLE `pueblos`
-  MODIFY `id_pueblo` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+MODIFY `id_pueblo` int(16) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=180;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+MODIFY `id_usuario` int(16) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+MODIFY `id_viaje` int(16) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --
@@ -388,26 +377,26 @@ ALTER TABLE `viajes`
 -- Filtros para la tabla `destinos`
 --
 ALTER TABLE `destinos`
-  ADD CONSTRAINT `destinos_ibfk_1` FOREIGN KEY (`provincia`) REFERENCES `provincias` (`id_provincia`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `destinos_ibfk_1` FOREIGN KEY (`provincia`) REFERENCES `provincias` (`id_provincia`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `pueblos`
 --
 ALTER TABLE `pueblos`
-  ADD CONSTRAINT `pueblo_en_provincia` FOREIGN KEY (`id_provincia`) REFERENCES `provincias` (`id_provincia`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `pueblo_en_provincia` FOREIGN KEY (`id_provincia`) REFERENCES `provincias` (`id_provincia`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`pueblo_origen`) REFERENCES `pueblos` (`id_pueblo`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`pueblo_origen`) REFERENCES `pueblos` (`id_pueblo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  ADD CONSTRAINT `viajes_ibfk_1` FOREIGN KEY (`destino`) REFERENCES `destinos` (`id_destino`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `viajes_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `viajes_ibfk_1` FOREIGN KEY (`destino`) REFERENCES `destinos` (`id_destino`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `viajes_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -90,6 +90,8 @@ def registro():
     #verificar datos aqui:
     #el pueblo existe
     errores=list()
+    if(len(datos["password"])<7):
+        errores.append("Contraseña demasiado corta")
     if(getIdPueblo(pueblo)=="ERROR"):
         errores.append("error: pueblo no existente: "+pueblo)
     #el correo es valido
@@ -180,6 +182,19 @@ def creaviaje():
         return {"exito":True}
     return{"Error":"Token inválido"}
 
+@app.route("/eliminaviaje/"):
+def eliminaviaje():
+    datos=request.form
+    token=datos["token"]
+    if checkToken(token):
+        id_usuario=getIdFromToken(token)
+        id_viaje=datos["id_viaje"]
+        consultaRevisaViaje="SELECT * FROM viajes where id_viaje="+id_viaje+";"
+
+
+
+    return {"error":"Token inválido"}
+
 
 @app.route("/viajesFiltrados/",methods=['POST'])
 def viajesFiltrados():
@@ -193,7 +208,6 @@ def viajesFiltrados():
     consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where llegada >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
      INTERVAL "+margen+" MINUTE) AND llegada <= date_add('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
       INTERVAL "+margen+" MINUTE) AND pueblo_origen="+origen+" AND destino="+destino
-    print(consultaInsertarViaje)
     conexionCreaViaje=conexion.conectar()
     cursorCreaViaje=conexionCreaViaje.cursor()
     cursorCreaViaje.execute(consultaInsertarViaje)
