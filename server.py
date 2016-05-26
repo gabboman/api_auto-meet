@@ -183,7 +183,7 @@ def creaviaje():
         return {"exito":True}
     return{"Error":"Token inválido"}
 
-@app.route("/eliminaviaje/"):
+@app.route("/eliminaviaje/")
 def eliminaviaje():
     datos=request.form
     token=datos["token"]
