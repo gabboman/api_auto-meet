@@ -169,9 +169,10 @@ def creaviaje():
         precio=datos["precio"]
         detalles=datos["detalles"]
         destino=datos["destino"]
-        consultaInsertarViaje="INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`) \
+        esdevuelta=datos["esdevuelta"]
+        consultaInsertarViaje="INSERT INTO `viajes` (`id_viaje`, `salida`, `llegada`, `detalles`, `id_usuario`, `plazas`, `precio`, `destino`,`EsDeVuelta`) \
         VALUES (NULL, '2016-01-"+str(dia)+" "+str(hora)+":"+str(minutos)+":00', '2016-01-"+str(dia)+" "+str(horaLlegada)+":"+str(minutosLlegada)+":00',\
-         '"+str(detalles)+"', '"+str(id_usuario)+"', '"+str(plazas)+"', '"+str(precio)+"', '"+str(destino)+"')"
+         '"+str(detalles)+"', '"+str(id_usuario)+"', '"+str(plazas)+"', '"+str(precio)+"', '"+str(destino)+"',"+esdevuelta+")"
         conexionCreaViaje=conexion.conectar()
         cursorCreaViaje=conexionCreaViaje.cursor()
         cursorCreaViaje.execute(consultaInsertarViaje)
