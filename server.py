@@ -212,8 +212,8 @@ def viajesFiltrados():
     cursorCreaViaje.execute(consultaInsertarViaje)
     conexionCreaViaje.close()
     res=dict()
-    for id_viaje,salida,llegada,detalles,id_usuario,plazas,precio,destino,pueblo_origen,telefono in cursorCreaViaje:
-         res[id_viaje]={"salida":salida,"llegada":llegada,"detalles":detalles,"id_usuario":id_usuario,"plazas":plazas,"precio":str(precio),"telefono":str(telefono)}
+    for id_viaje,salida,llegada,detalles,id_usuario,plazas,precio,destino,EsDeVuelta,pueblo_origen,telefono in cursorCreaViaje:
+         res[id_viaje]={"salida":salida,"llegada":llegada,"detalles":detalles,"id_usuario":id_usuario,"plazas":plazas,"precio":str(precio),"telefono":str(telefono),"EsDeVuelta":str(EsDeVuelta)}
 
 
 
