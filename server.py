@@ -58,8 +58,7 @@ def getIdFromToken(token):
     conexionToken.close()
     res=str(-1)
     for tok in cursorToken:
-        res =tok[0]
-        print (res)
+        return tok[0]
     print("TOKEN INVALIDO")
     return res
 
