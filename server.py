@@ -42,6 +42,7 @@ def checkToken(token):
     conexionToken=conexion.conectar()
     cursorToken=conexionToken.cursor()
     cursorToken.execute(consultaToken)
+    conexionToken.close()
     for tok in cursorToken:
         return True
     return False
@@ -54,8 +55,10 @@ def getIdFromToken(token):
     print(consultaToken)
     cursorToken=conexionToken.cursor()
     cursorToken.execute(consultaToken)
+    conexionToken.close()
     res="ERROR"
     for tok in cursorToken:
+        print (res)
         res =tok[0]
     print("TOKEN INVALIDO")
     return res
@@ -221,8 +224,6 @@ def viajesFiltrados():
     res=dict()
     for id_viaje,salida,llegada,detalles,id_usuario,plazas,precio,destino,EsDeVuelta,pueblo_origen,telefono in cursorCreaViaje:
          res[id_viaje]={"salida":salida,"llegada":llegada,"detalles":detalles,"id_usuario":id_usuario,"plazas":plazas,"precio":str(precio),"telefono":str(telefono),"EsDeVuelta":str(EsDeVuelta)}
-
-
 
     return res
 
