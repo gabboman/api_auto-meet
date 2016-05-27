@@ -56,10 +56,10 @@ def getIdFromToken(token):
     cursorToken=conexionToken.cursor()
     cursorToken.execute(consultaToken)
     conexionToken.close()
-    res="ERROR"
+    res=str(-1)
     for tok in cursorToken:
-        print (res)
         res =tok[0]
+        print (res)
     print("TOKEN INVALIDO")
     return res
 
