@@ -203,9 +203,10 @@ def viajesFiltrados():
     destino=datos["destino"]
     origen=datos["origen"]#Numero indicando el id del pueblo
     margen=datos["margen"]
+    vuelta=datos["EsDeVuelta"]
     consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen,usuarios.telefono FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where llegada >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
      INTERVAL "+margen+" MINUTE) AND llegada <= date_add('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
-      INTERVAL "+margen+" MINUTE) AND pueblo_origen="+origen+" AND destino="+destino
+      INTERVAL "+margen+" MINUTE) AND pueblo_origen="+origen+" AND destino="+destino+" AND EsDeVuelta="+EsDeVuelta
     print (consultaInsertarViaje)
     conexionCreaViaje=conexion.conectar()
     cursorCreaViaje=conexionCreaViaje.cursor()
