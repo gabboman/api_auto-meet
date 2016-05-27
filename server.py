@@ -38,8 +38,14 @@ cnx.close()
 
 #Funciones de utilidad
 def checkToken(token):
-    #print (token)
-    return not getIdFromToken(token)=="ERROR"
+    consultaToken='SELECT token FROM `usuarios` WHERE `token` LIKE \''+token+'\''
+    conexionToken=conexion.conectar()
+    cursorToken=conexionToken.cursor()
+    cursorToken.execute(consultaToken)
+    for tok in cursorToken:
+        return True
+    return False
+
 
 
 def getIdFromToken(token):
