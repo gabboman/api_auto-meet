@@ -38,24 +38,21 @@ cnx.close()
 
 #Funciones de utilidad
 def checkToken(token):
-    consultaToken='SELECT token FROM `usuarios` WHERE `token` LIKE \''+token+'\''
-    conexionToken=conexion.conectar()
-    cursorToken=conexionToken.cursor()
-    cursorToken.execute(consultaToken)
-    for tok in cursorToken:
-        return True
-    return False
+    #print (token)
+    return not getIdFromToken(token)=="ERROR"
 
 
 def getIdFromToken(token):
     consultaToken='SELECT id_usuario FROM `usuarios` WHERE `token` LIKE \''+token+'\''
     conexionToken=conexion.conectar()
+    print(consultaToken)
     cursorToken=conexionToken.cursor()
     cursorToken.execute(consultaToken)
+    res="ERROR"
     for tok in cursorToken:
-        return tok[0]
+        res =tok[0]
     print("TOKEN INVALIDO")
-    return "ERROR"
+    return res
 
 def getIdPueblo(pueblo):#Si es un numero verificamos que esta en la lista de pueblos, si no , lo hacemos alrevés y buscamos su id
     if(pueblo in pueblos):
@@ -206,7 +203,7 @@ def viajesFiltrados():
     destino=datos["destino"]
     origen=datos["origen"]#Numero indicando el id del pueblo
     margen=datos["margen"]
-    consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where llegada >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
+    consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen,usuarios.telefono FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where llegada >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
      INTERVAL "+margen+" MINUTE) AND llegada <= date_add('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
       INTERVAL "+margen+" MINUTE) AND pueblo_origen="+origen+" AND destino="+destino
     conexionCreaViaje=conexion.conectar()
