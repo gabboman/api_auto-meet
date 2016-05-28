@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from validate_email import validate_email
 import re
 import conexion
+import datetime
 app = FlaskAPI(__name__)
 
 cnx = conexion.conectar()
@@ -95,7 +96,7 @@ def registro():
     #verificar datos aqui:
     #el pueblo existe
     errores=list()
-    if(len(datos["password"])<7):
+    if(len(datos["password"])<6):
         errores.append("Contraseña demasiado corta")
     if(getIdPueblo(pueblo)=="ERROR"):
         errores.append("error: pueblo no existente: "+pueblo)
@@ -212,8 +213,8 @@ def viajesFiltrados():
     origen=datos["origen"]#Numero indicando el id del pueblo
     margen=datos["margen"]
     vuelta=datos["EsDeVuelta"]
-    consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen,usuarios.telefono FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where llegada >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
-     INTERVAL "+margen+" MINUTE) AND llegada <= date_add('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
+    consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen,usuarios.telefono FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where salida >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
+     INTERVAL "+margen+" MINUTE) AND salida <= date_add('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
       INTERVAL "+margen+" MINUTE) AND pueblo_origen="+origen+" AND destino="+destino+" AND EsDeVuelta="+vuelta
     print (consultaInsertarViaje)
     conexionCreaViaje=conexion.conectar()
@@ -222,7 +223,12 @@ def viajesFiltrados():
     conexionCreaViaje.close()
     res=dict()
     for id_viaje,salida,llegada,detalles,id_usuario,plazas,precio,destino,EsDeVuelta,pueblo_origen,telefono in cursorCreaViaje:
-         res[id_viaje]={"salida":salida,"llegada":llegada,"detalles":detalles,"id_usuario":id_usuario,"plazas":plazas,"precio":str(precio),"telefono":str(telefono),"EsDeVuelta":str(EsDeVuelta)}
+        #salida_fecha= datetime.datetime.strptime(str(salida),"%Y-%M-%D %H:%M:%S").datetime()
+        salida_fecha=salida
+        salida_dia=salida_fecha.day
+        salida_hora=salida_fecha.hour
+        salida_minuto=salida_fecha.minute
+        res[id_viaje]={"dia":salida_dia,"hora":salida_hora,"minutos":salida_minuto,"detalles":detalles,"id_usuario":id_usuario,"plazas":plazas,"precio":str(precio),"telefono":str(telefono),"EsDeVuelta":str(EsDeVuelta)}
 
     return res
 
