@@ -53,14 +53,14 @@ def checkToken(token):
 def getIdFromToken(token):
     consultaToken='SELECT id_usuario FROM `usuarios` WHERE `token` LIKE \''+token+'\''
     conexionToken=conexion.conectar()
-    print(consultaToken)
+    #print(consultaToken)
     cursorToken=conexionToken.cursor()
     cursorToken.execute(consultaToken)
     conexionToken.close()
-    res=str(-1)
+    res="ERROR"
     for tok in cursorToken:
         return tok[0]
-    print("TOKEN INVALIDO")
+    #print("TOKEN INVALIDO")
     return res
 
 def getIdPueblo(pueblo):#Si es un numero verificamos que esta en la lista de pueblos, si no , lo hacemos alrevés y buscamos su id
@@ -216,7 +216,7 @@ def viajesFiltrados():
     consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen,usuarios.telefono FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where salida >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
      INTERVAL "+margen+" MINUTE) AND salida <= date_add('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
       INTERVAL "+margen+" MINUTE) AND pueblo_origen="+origen+" AND destino="+destino+" AND EsDeVuelta="+vuelta
-    print (consultaInsertarViaje)
+    #print (consultaInsertarViaje)
     conexionCreaViaje=conexion.conectar()
     cursorCreaViaje=conexionCreaViaje.cursor()
     cursorCreaViaje.execute(consultaInsertarViaje)
