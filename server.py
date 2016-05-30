@@ -210,7 +210,7 @@ def viajesFiltrados():
     hora=datos["hora"]
     minutos=datos["minutos"]
     destino=datos["destino"]
-    origen=datos["origen"]#Numero indicando el id del pueblo
+    origen=getIdPueblo(datos["origen"])#Numero indicando el id del pueblo
     margen=datos["margen"]
     vuelta=datos["EsDeVuelta"]
     consultaInsertarViaje="SELECT viajes.*,usuarios.pueblo_origen,usuarios.telefono FROM viajes INNER JOIN usuarios on viajes.id_usuario=usuarios.id_usuario where salida >= date_sub('2016-01-"+str (dia)+" "+str(hora)+":"+str(minutos)+":00',\
